@@ -1,30 +1,23 @@
 <?php
+    include_once 'ciklas.php'; //Prijungiamas ciklas.php
 
-    $skaicius=165168515; //Ivedamas pradinis skaicius.
+    $nuo=156156;
+    $iki=256156; //Ivedamos intervalo ribos.
 
 
-    $nariai=array();
+    echo "Intervalas: nuo ".$nuo." iki ".$iki.".<br><br>"; //Isvedamas intervalas.
 
-    echo"Pradinis skaicius: ".$skaicius."<br><br>"; //Isvedamas pradinis skaicius.
-
-    if($skaicius<=0){ //Tikrinama ar ivestas skaicius yra teigiamas.
-        exit("Ivestas skaicius turi buti teigiamas.");
+    if($nuo<=0 || $iki<=0){ //Tikrinama, ar ivestas skaicius yra teigiamas.
+        exit("Intervalo pradzia bei pabaiga privalo buti teigiami skaiciai.");
+    }
+    if($nuo>$iki){ //Tikrinama, ar intervalo pradzia nera didesne uz intervalo pabaiga.
+        exit("Intervalo pradzia negali buti didesne uz intervalo pabaiga.");
     }
 
-    while($skaicius!=1){
-        array_push($nariai, $skaicius);
-        if($skaicius%2==0){ //Jei skaicius lyginis, jis dalinamas is 2, jei nelyginis, jis dauginamas is 3 ir pridedamas 1.
-            $skaicius/=2;
-        }
-        else{
-            $skaicius=3*$skaicius+1;
-        }
-    }
+    $uzdavinys=new Ciklas(); //Sukuriamas objektas.
+    $uzdavinys->setData($nuo, $iki); //Nustatomos intervalo ribos.
 
-    echo "Skaiciai:<br>";
-    for($i=0; $i<count($nariai); $i++){ //Isvedami gauti skaiciai.
-        echo $nariai[$i]." -> ";
-    }
-    echo "1";
-    echo "<br><br>Iteraciju skaicius: ".count($nariai); //Isvedamas iteraciju skaicius.
+    echo "Daugiausiai iteraciju: ".$uzdavinys->Statistika()['DaugiausiaiIteraciju'].".<br>"; //Isvedama daugiausiai iteraciju.
+    echo "Maziausiai iteraciju: ".$uzdavinys->Statistika()['MaziausiaiIteraciju'].".<br>"; //Isvedama maziausiai iteraciju.
+    echo "Didziausias gautas skaicius visu iteraciju metu: ".$uzdavinys->Statistika()["DidziausiasSkaicius"].".<br>"; //Isvedamas didziausias gautas skaicius visu iteraciju metu.
 ?>
